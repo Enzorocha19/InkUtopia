@@ -1,246 +1,85 @@
-Documento de Regras de Negócio
+# 🖋️ Sistema de Plataforma de Tatuagens
 
-Sistema de Plataforma de Tatuagens
-1. Descrição Geral
-A plataforma tem como objetivo conectar clientes, artistas tatuadores e estúdios, permitindo:
-divulgação de portfólios
+Uma rede social especializada para conectar clientes, artistas tatuadores e estúdios de tatuagem, facilitando o agendamento e a divulgação de portfólios.
 
-interação social (curtidas, comentários, salvamentos)
+---
 
-comunicação entre usuários
+## 📑 Sumário
+- [Descrição Geral](#-descrição-geral)
+- [Tipos de Usuários](#-tipos-de-usuários)
+- [Regras de Negócio (RN)](#-regras-de-negócio-rn)
+- [Funcionalidades e Interações](#-funcionalidades-e-interações)
+- [Segurança e Moderação](#-segurança-e-moderação)
+- [Tecnologias](#-tecnologias)
 
-avaliações de serviços
+---
 
-agendamento de tatuagens
+## 📖 Descrição Geral
+A plataforma funciona como um ecossistema completo para o mundo da tatuagem, permitindo:
+* **Divulgação:** Portfólios dinâmicos para artistas.
+* **Interação:** Curtidas, comentários e salvamentos de posts.
+* **Gestão:** Agendamento de serviços e comunicação direta.
+* **Confiança:** Sistema de avaliações de artistas e estúdios.
 
-O sistema funciona como uma rede social especializada em tatuagem, permitindo que artistas divulguem seus trabalhos e clientes encontrem profissionais e estúdios.
-Tecnologia escolhida: PostgreSQL
+---
 
-2. Tipos de Usuários
-O sistema possui três tipos principais de usuários:
-Cliente
-Usuário que acessa a plataforma para:
-visualizar trabalhos de artistas
+## 👥 Tipos de Usuários
 
-interagir com publicações
+| Perfil | Descrição |
+| :--- | :--- |
+| **Cliente** | Usuário que busca artistas, interage com posts, realiza agendamentos e avalia serviços. |
+| **Artista** | Profissional que publica trabalhos, oferece serviços e pode gerenciar ou participar de um estúdio. |
+| **Admin do Estúdio** | Um Artista com permissões administrativas para gerenciar membros e informações do estúdio. |
 
-entrar em contato com artistas ou estúdios
+---
 
-realizar agendamentos
+## 🛠️ Regras de Negócio (RN)
 
-avaliar serviços
+### 01. Cadastro e Perfil
+* **RN01 (Cadastro):** Requer nome, email único, senha e telefone. O usuário deve escolher entre perfil Cliente ou Artista.
+* **RN02 (Perfil):** Liberdade para atualização de bio, fotos e contatos.
 
-Artista
-Usuário profissional que pode:
-publicar seus trabalhos
+### 02. Gestão de Estúdios
+* **RN03 (Criação):** Exclusiva para artistas. O criador torna-se o administrador.
+* **RN05 (Vínculo):** Um artista pode estar em apenas **um** estúdio por vez.
+* **RN06 (Ingresso):** Depende de solicitação do artista e aprovação do administrador do estúdio.
 
-oferecer serviços
+### 03. Conteúdo e Portfólio
+* **RN07/08 (Posts):** Suporte a imagens, vídeos, descrições e orçamentos estimados. Estúdios também podem postar em nome da marca.
+* **RN09 (Portfólio):** Vitrine automática baseada nas publicações do artista.
 
-participar de um estúdio
+### 04. Agendamentos
+* **RN16 (Solicitação):** O cliente define data, hora e serviço.
+* **RN17 (Fluxo):** O artista controla o status: `Pendente` → `Confirmado` / `Cancelado` → `Concluído`.
 
-receber avaliações
+### 05. Ciclo de Vida dos Dados
+* **RN20 (Exclusão de Conta):** Remove todos os dados do usuário e suas postagens permanentemente.
+* **RN21 (Exclusão de Post):** Remove a mídia e todas as interações (curtidas/comentários) vinculadas.
 
-interagir com clientes
+---
 
-Administrador do Estúdio
-Usuário artista que criou um estúdio e possui permissões administrativas dentro dele.
+## 💬 Funcionalidades e Interações
+* **Social:** Curtida única por postagem e sistema de comentários rastreáveis.
+* **Mensageria:** Chat direto entre as partes interessadas.
+* **Avaliações:** Notas de 1 a 5 para profissionais e estabelecimentos.
+* **Favoritos:** Lista de salvamentos para referência futura do cliente.
 
-3. Regras de Cadastro
-RN01 – Cadastro de Usuário
-Qualquer pessoa pode criar uma conta na plataforma fornecendo:
-nome
+---
 
-email
+## 🔒 Segurança e Moderação
+* **RN18:** Monitoramento e remoção de conteúdos ofensivos ou inadequados.
+* **RN19:** Garantia de unicidade de conta via e-mail.
 
-senha
+---
 
-telefone
+## 🚀 Próximos Passos (Backlog)
+- [ ] Sistema de Seguidores e Feed Personalizado.
+- [ ] Integração com Mapas (Localização de estúdios próximos).
+- [ ] Sistema de Notificações Push/In-app.
+- [ ] Agenda visual para o Artista.
+- [ ] Canal de Denúncias.
 
-Após o cadastro, o usuário deve escolher entre:
-Cliente
+---
 
-Artista
-
-RN02 – Alteração de Perfil
-Usuários podem atualizar informações do perfil como:
-foto
-
-biografia
-
-contato
-
-4. Regras de Estúdio
-RN03 – Criação de Estúdio
-Apenas usuários do tipo artista podem criar um estúdio.
-Ao criar um estúdio, o artista automaticamente se torna:
-Administrador do estúdio.
-
-RN04 – Administração do Estúdio
-O administrador do estúdio pode:
-editar informações do estúdio
-
-aprovar artistas solicitando entrada
-
-remover artistas do estúdio
-
-RN05 – Associação de Artistas
-Um artista pode estar associado a apenas um estúdio.
-Um estúdio pode possuir vários artistas associados.
-
-RN06 – Solicitação de Entrada no Estúdio
-Um artista pode solicitar participação em um estúdio.
-A entrada só ocorre após aprovação do administrador do estúdio.
-
-5. Regras de Postagens
-RN07 – Postagem de Conteúdo
-Artistas podem criar publicações contendo:
-imagens
-
-vídeos
-
-descrição do trabalho
-
-preço estimado
-
-RN08 – Postagem do Estúdio
-Estúdios também podem realizar postagens.
-Essas postagens podem estar relacionadas a:
-um artista específico do estúdio
-
-trabalhos realizados no estúdio
-
-RN09 – Portfólio
-Cada artista possui um portfólio composto por:
-imagens
-
-vídeos
-
-descrições de trabalhos
-
-6. Interações na Plataforma
-RN10 – Curtidas
-Clientes podem curtir postagens de artistas ou estúdios.
-Um usuário pode curtir uma postagem apenas uma vez.
-
-RN11 – Comentários
-Usuários podem comentar nas postagens.
-Comentários devem estar vinculados a:
-usuário autor
-
-postagem
-
-RN12 – Salvamento de Postagens
-Clientes podem salvar postagens para visualização posterior.
-Essas postagens ficam armazenadas em uma lista de favoritos do usuário.
-
-7. Comunicação
-RN13 – Sistema de Mensagens
-Clientes podem enviar mensagens para:
-artistas
-
-estúdios
-
-Artistas também podem responder às mensagens.
-
-8. Avaliações
-RN14 – Avaliação de Artistas
-Clientes podem avaliar artistas após interação ou serviço realizado.
-A avaliação deve conter:
-nota (1 a 5)
-
-comentário opcional
-
-RN15 – Avaliação de Estúdios
-Clientes também podem avaliar estúdios.
-
-9. Regras de Agendamento
-RN16 – Solicitação de Agendamento
-Clientes podem solicitar agendamentos com artistas.
-O pedido deve conter:
-artista
-
-serviço
-
-data e horário desejados
-
-observações
-
-RN17 – Confirmação do Agendamento
-O artista deve confirmar ou recusar o agendamento.
-Status possíveis:
-pendente
-
-confirmado
-
-cancelado
-
-concluído
-
-10. Moderação e Segurança
-RN18 – Conteúdo Inadequado
-A plataforma poderá remover conteúdos que:
-violem regras da comunidade
-
-contenham material ofensivo
-
-RN19 – Autenticidade
-Cada conta deve estar vinculada a um email único.
-
-11. Outras funcionalidades desejáveis para o projeto
-Sistema de seguidores
-Usuários podem seguir artistas.
-Isso permite:
-feed personalizado
-
-notificações de novas postagens
-
-Feed personalizado
-O sistema mostra:
-posts de artistas seguidos
-
-posts populares
-
-artistas próximos da localização
-
-Localização de estúdios
-Integração com mapa para mostrar:
-estúdios próximos
-
-endereço
-
-rota até o local
-
-Notificações
-Usuários recebem notificações quando:
-alguém curte sua postagem
-
-alguém comenta
-
-recebe mensagem
-
-agendamento é confirmado
-
-Agenda do artista
-Artistas possuem um calendário com:
-horários disponíveis
-
-agendamentos marcados
-
-Denúncia de conteúdo
-Usuários podem denunciar:
-perfis
-
-postagens
-
-comentários
-
-12. Exclusão de conta, postagens
-RN20 – Exclusão de conta
-Usuários podem excluir suas contas.
-Ao excluir a conta:
-seus dados são removidos do banco de dados
-as postagens relacionadas a conta excluída serão também excluídas
-RN21 – Exclusão de post
-Artistas e estúdios podem excluir postagens feitas
-Ao excluir a postagem:
-Os dados relacionados a postagem serão excluídos
+## 💻 Tecnologias
+* **Banco de Dados:** PostgreSQL
